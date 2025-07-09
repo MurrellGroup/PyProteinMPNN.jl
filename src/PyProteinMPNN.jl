@@ -1,7 +1,7 @@
 module PyProteinMPNN
 
 # Write your package code here.
-using CondaPkg
+#using CondaPkg
 using Pkg.Artifacts
 
 include("helper_script_wrappers.jl")
@@ -13,7 +13,7 @@ export run_protein_mpnn
 ProteinMPNN_path = joinpath(artifact"proteinmpnn", "ProteinMPNN-1.0.1")
 
 function run_py_script(script_path; join_proteinmpnn_path=true, kwargs...)
-    CondaPkg.withenv() do
+    #CondaPkg.withenv() do
         if join_proteinmpnn_path
             script_path = joinpath(ProteinMPNN_path, script_path)
         end
@@ -31,7 +31,7 @@ function run_py_script(script_path; join_proteinmpnn_path=true, kwargs...)
         end
         @show cmd
         run(cmd)
-    end
+   #end
 end
 
 function readfasta(filename; remove_first=false)
