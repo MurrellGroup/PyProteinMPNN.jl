@@ -34,10 +34,14 @@ function run_py_script(script_path; join_proteinmpnn_path=true, kwargs...)
     end
 end
 
-function readfasta(file)
+function readfasta(filename; remove_first=false)
     seqs = Dict{String, String}()
     header = nothing
-    for line in readlines(file)
+    lines = readlines(filename)
+    if remove_first
+        lines = lines[3:end]
+    end
+    for line in lines
         if startswith(line, ">")
             header = line[2:end]
         else
@@ -50,13 +54,14 @@ function readfasta(file)
 end
 
 function read_protein_mpnn_output(output_path)
-    for file in readdir(joinpath(output_path, "seqs"))
-        if endswith(file, ".fa")
-            seqs = readfasta(joinpath(output_path, "seqs", file))
-            return seqs
+    seqs = Dict()
+    for filename in readdir(joinpath(output_path, "seqs"))
+        if endswith(filename, ".fa")
+            pdb_name = first(splitext(filename))
+            seqs[pdb_name] = collect(values(readfasta(joinpath(output_path, "seqs", filename); remove_first=true)))
         end
     end
-    error("No FASTA files found in $output_path/seqs")
+    return seqs
 end
 
 """
@@ -64,15 +69,22 @@ input_path must be a folder with PDB files.
 """
 function run_protein_mpnn(tmp_dir, input_path, output_path; ca_only=false, kwargs...)
     mkpath(tmp_dir)
+    if isfile(input_path)
+        new_input_path = joinpath(tmp_dir, basename(input_path))
+        cp(input_path, new_input_path)
+        input_path = new_input_path
+    end
     parsed_pdbs_path = joinpath(tmp_dir, "parsed_pdbs.jsonl")
     HelperScriptWrappers.parse_multiple_chains(input_path, parsed_pdbs_path; ca_only)
     HelperScriptWrappers.protein_mpnn_run(parsed_pdbs_path, output_path; ca_only, kwargs...)
     seqs_dict = read_protein_mpnn_output(output_path)
-    generated_seqs = collect(values(seqs_dict))[2:end]
-    return generated_seqs
+    return seqs_dict
 end
 run_protein_mpnn(input_path, output_path; ca_only=false, kwargs...) = mktempdir() do tmp_dir
     run_protein_mpnn(tmp_dir, input_path, output_path; ca_only, kwargs...)
+end
+run_protein_mpnn(input_path; ca_only=false, kwargs...) = mktempdir() do tmp_dir
+    run_protein_mpnn(tmp_dir, input_path, joinpath(tmp_dir, "output"); ca_only, kwargs...)
 end
 
 end
