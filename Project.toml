@@ -1,16 +1,18 @@
 name = "PyProteinMPNN"
 uuid = "ba507b30-8e11-4219-9ced-db99387ea03d"
 authors = ["aronStalmarck <aron.stalmarck@gmail.com> and contributors"]
-version = "1.0.0-DEV"
+version = "1.0.1-DEV"
 
 [deps]
 CondaPkg = "992eb4ea-22a4-4c89-a5bb-47a3300528ab"
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 PythonCall = "6099a3de-0909-46bc-b1f4-468b9a2dfc0d"
 
 [compat]
 CondaPkg = "0.2.29"
 Documenter = "1.13.0"
+Pkg = "1.11.0"
 PythonCall = "0.9.25"
 julia = "1.6.7"
 
