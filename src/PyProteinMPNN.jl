@@ -70,9 +70,8 @@ input_path must be a folder with PDB files.
 function run_protein_mpnn(tmp_dir, input_path, output_path; ca_only=false, kwargs...)
     mkpath(tmp_dir)
     if isfile(input_path)
-        new_input_path = joinpath(tmp_dir, basename(input_path))
-        cp(input_path, new_input_path)
-        input_path = new_input_path
+        new_input_path = joinpath(tmp_dir, "input")
+        cp(input_path, joinpath(new_input_path, basename(input_path)))
     end
     parsed_pdbs_path = joinpath(tmp_dir, "parsed_pdbs.jsonl")
     HelperScriptWrappers.parse_multiple_chains(input_path, parsed_pdbs_path; ca_only)
