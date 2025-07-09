@@ -24,13 +24,7 @@ Run ProteinMPNN on a JSONL file.
 # Arguments
 - `jsonl_path::String`: Path to the JSONL file.
 - `out_folder::String`: Path to the output folder.
-- `kwargs...`: Additional keyword arguments to pass to the ProteinMPNN script. Currently supported:
-    - `ca_only::Bool`: Whether to only include CA atoms.
-    - `num_recycles::Int`: Number of recycles.
-    - `num_steps::Int`: Number of steps.
-    - `num_iters::Int`: Number of iterations.
-    - `num_steps_per_iter::Int`: Number of steps per iteration.
-    - `num_iters_per_step::Int`: Number of iterations per step.
+- `kwargs...`: Additional keyword arguments to pass to the ProteinMPNN script.
 """
 function protein_mpnn_run(jsonl_path, out_folder; kwargs...)
     PyProteinMPNN.run_py_script("protein_mpnn_run.py"; jsonl_path, out_folder, kwargs...)
