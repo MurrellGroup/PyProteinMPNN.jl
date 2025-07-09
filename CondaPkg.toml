@@ -1,6 +1,4 @@
 [deps]
 pytorch = ""
 cudatoolkit = "=11.3"
-torchvision = ""
 python = ">=3.0"
-torchaudio = ""
