@@ -2,6 +2,5 @@
 pytorch = ""
 cudatoolkit = "=11.3"
 torchvision = ""
-numpy = ""
 python = ">=3.0"
 torchaudio = ""
