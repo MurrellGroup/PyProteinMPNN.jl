@@ -1,7 +1,6 @@
 module PyProteinMPNN
 
 # Write your package code here.
-using PythonCall
 using CondaPkg
 using Pkg.Artifacts
 
