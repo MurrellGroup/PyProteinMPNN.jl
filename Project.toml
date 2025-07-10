@@ -1,7 +1,7 @@
 name = "PyProteinMPNN"
 uuid = "ba507b30-8e11-4219-9ced-db99387ea03d"
 authors = ["aronStalmarck <aron.stalmarck@gmail.com> and contributors"]
-version = "1.0.3-DEV"
+version = "1.0.4-DEV"
 
 [deps]
 CondaPkg = "992eb4ea-22a4-4c89-a5bb-47a3300528ab"
